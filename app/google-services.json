@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "103072276450",
+    "firebase_url": "https://snaketetrice.firebaseio.com",
+    "project_id": "snaketetrice",
+    "storage_bucket": "snaketetrice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103072276450:android:20ffb4e8a506b255",
+        "android_client_info": {
+          "package_name": "com.catxer.serg.snaketetr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103072276450-99tvmgmpinuscml6a10ksdovhplolte9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.catxer.serg.snaketetr",
+            "certificate_hash": "f5725674e0b4855d422931238977468f406ebe14"
+          }
+        },
+        {
+          "client_id": "103072276450-5b3ih6viqd73i041orbe8d6gllob69gv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb28oEO0BW056otH1A7qTi9yzCEiOaNy8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103072276450-5b3ih6viqd73i041orbe8d6gllob69gv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

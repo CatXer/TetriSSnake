@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_dark_focused"
+    android:orientation="vertical"
+    tools:context=".Activity.BaseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/CanvasContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <ImageView
+                    android:id="@+id/top"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/up" />
+
+                <ImageView
+                    android:id="@+id/down"
+                    android:layout_width="80dp"
+                    android:layout_height="90dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/down" />
+
+                <ImageView
+                    android:id="@+id/left"
+                    android:layout_width="140dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/left" />
+
+                <ImageView
+                    android:id="@+id/right"
+                    android:layout_width="140dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/right" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="GM: ST"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/baseline_pause_white_36dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
