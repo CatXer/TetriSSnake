@@ -1,5 +1,6 @@
 package com.catxer.serg.snaketetr.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -21,13 +22,13 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
 
     public static GamePanel gamePanel;
+    @SuppressLint("StaticFieldLeak")
     public static TextView info;
     private static int RateScore = 0;
     private static int EatsCount = 0;
     private static String score;
 
     public GameFragment() {
-        // Required empty public constructor
     }
 
     public void addScore(int size) {
