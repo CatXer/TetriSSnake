@@ -10,10 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.catxer.serg.snaketetr.Fragments.GameFragment;
 import com.catxer.serg.snaketetr.R;

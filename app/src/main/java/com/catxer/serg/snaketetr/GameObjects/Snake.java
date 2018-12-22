@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
-import com.catxer.serg.snaketetr.Fragments.GameFragment;
-import com.catxer.serg.snaketetr.Mechanics.GameLoop;
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 
 import java.util.ArrayList;

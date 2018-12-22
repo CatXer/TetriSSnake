@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
+import com.catxer.serg.snaketetr.Activity.EndGameDialog;
 import com.catxer.serg.snaketetr.Activity.PauseDialog;
 import com.catxer.serg.snaketetr.GameObjects.Snake;
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
@@ -18,10 +19,11 @@ import com.catxer.serg.snaketetr.R;
 
 import java.util.Objects;
 
-public class GameFragment extends Fragment implements View.OnClickListener {
+public class GameFragment extends Fragment implements View.OnClickListener, OnBackPressedListener {
 
 
     public static GamePanel gamePanel;
+    public int GameMode = 2;
     @SuppressLint("StaticFieldLeak")
     public static TextView info;
     private static int RateScore = 0;
@@ -29,6 +31,11 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private static String score;
 
     public GameFragment() {
+    }
+
+    @SuppressLint("ValidFragment")
+    public GameFragment(int GameMode) {
+        this.GameMode = GameMode;
     }
 
     public void addScore(int size) {
@@ -42,12 +49,11 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void updateUI() {
-        score = "GM:" + gamePanel.getGameMode() + "\n\nscore:" + RateScore + "\nneat:" + EatsCount;
+        score = "GM:" + gamePanel.getGameMode() + "\n\nscore:" + RateScore + "\neat:" + EatsCount;
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 info.setText(score);
-
             }
         });
     }
@@ -73,17 +79,16 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         info = view.findViewById(R.id.score);
 
-        //Choose Type Game
-        StartNewGame(0);
+        StartNewGame(GameMode);
 
         return view;
     }
 
-    private void StartNewGame(int GameMode) {
+    public void StartNewGame(int GameMode) {
         RateScore = 0;
         EatsCount = 0;
         gamePanel = new GamePanel(this, GameMode);
-        BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new CanvasFragment(), R.id.CanvasContainer);
+        BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new CanvasFragment(), R.id.CanvasContainer, R.anim.fade_in, R.anim.fade_out, false, "draw_field");
         updateUI();
     }
 
@@ -112,9 +117,12 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
-        if (GamePanel.GameOver) {
-            StartNewGame(1);
-            //draw Retry Screen
-        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        gamePanel.pause();
+        new EndGameDialog(Objects.requireNonNull(getContext())).show();
     }
 }

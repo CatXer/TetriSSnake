@@ -13,7 +13,9 @@ import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.catxer.serg.snaketetr.Activity.BaseActivity;
 import com.catxer.serg.snaketetr.Fragments.GameFragment;
+import com.catxer.serg.snaketetr.Fragments.GameOverFragment;
 import com.catxer.serg.snaketetr.GameObjects.Block;
 import com.catxer.serg.snaketetr.GameObjects.EatBlock;
 import com.catxer.serg.snaketetr.GameObjects.MapPoint;
@@ -123,7 +125,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      * -> Update Objects ->
      **/
     public void update() {
-        Update_snakes();
+        if (!GameOver)
+            Update_snakes();
+        else
+            GameOver();
     }
 
     private void Update_snakes() {
@@ -239,9 +244,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         for (Snake s : snake)
             s.draw(canvas);
         eatBlock.draw(canvas);
-        if (GameOver) {
-            drawGO(canvas);
-        }
+
     }
 
     private void drawField(Canvas canvas, int background) {
@@ -266,9 +269,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    private void drawGO(Canvas canvas) {
+    private void GameOver() {
         thread.Stop();
-        canvas.drawColor(Color.BLACK);
+     /*   canvas.drawColor(Color.BLACK);
         Paint paintL = new Paint();
         paintL.setColor(Color.WHITE);
         paintL.setTextSize(100);
@@ -276,7 +279,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawText("Game Over!", 100, FRAME_HEIGHT / 2, paintL);
         paintL.setTextSize(80);
-        canvas.drawText("Press any to replay.", 0, FRAME_HEIGHT / 2 + 200, paintL);
+        canvas.drawText("Press any to replay.", 0, FRAME_HEIGHT / 2 + 200, paintL);*/
+        BaseActivity.setFragment(Objects.requireNonNull(fragment.getActivity()), new GameOverFragment(), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "GO-screen");
+
     }
 
     /**
@@ -297,6 +302,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 return "ST";
         }
         return null;
+    }
+
+    public void closeGame() {
+        GameOver = true;
+        thread.Stop();
     }
 }
 
