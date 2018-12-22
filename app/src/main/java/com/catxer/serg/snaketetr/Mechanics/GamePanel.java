@@ -280,7 +280,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * <- end Draw Objects <-
+     * <- End Draw Objects <-
      * ***************************************
      **/
 
