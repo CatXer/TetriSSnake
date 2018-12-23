@@ -1,6 +1,7 @@
 package com.catxer.serg.snaketetr.Fragments;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
+import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 import com.catxer.serg.snaketetr.R;
 
 import java.util.Objects;
@@ -19,8 +21,14 @@ import java.util.Objects;
  */
 public class GameOverFragment extends Fragment implements View.OnClickListener {
     private View GO_view;
+    private int GAME_MODE;
 
     public GameOverFragment() {
+    }
+
+    @SuppressLint("ValidFragment")
+    public GameOverFragment(int GM) {
+        GAME_MODE = GM;
     }
 
     @Override
@@ -29,6 +37,8 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
 
         ImageView close = GO_view.findViewById(R.id.exit_menu);
         close.setOnClickListener(this);
+        ImageView replay = GO_view.findViewById(R.id.replay);
+        replay.setOnClickListener(this);
 
 
         return GO_view;
@@ -37,6 +47,9 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.replay:
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(GAME_MODE), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "game-" + GAME_MODE);
+                break;
             case R.id.exit_menu:
                 BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new MainMenuFragment(), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "Menu");
                 break;

@@ -135,9 +135,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         newSpawn = true;
         for (Snake s : snake) {
             s.update();
-            if (s.isAlive() && s.getHead().getPoint().equals(eatBlock.getPoint()))
+            if (s.isAlive() && s.getHead().getPoint().equals(eatBlock.getPoint())) {
+                fragment.addEat();
                 if (GAME_MODE == 1) {
-                    fragment.addEat();
                     eatBlock.setColor(Color.TRANSPARENT);
                     s.setAlive(false);
                     GameLoop.Daley = 30;
@@ -148,11 +148,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                             s.addBody();
                             break;
                         case 1:
-                            if (s.size() > 3)
-                                s.remove(s.size() - 1);
-                            else s.addBody();
+                            s.setRandomColor();
                             break;
                         case 2:
+                            fragment.addScore(s.size() - 3);
                             for (int i = s.size() - 1; i > 2; i--)
                                 s.remove(i);
                             break;
@@ -167,6 +166,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     eatBlock = new EatBlock(type);
                     ////////////////////////////////////////////////
                 }
+            }
         }
         Update_map();
         if (GAME_MODE == 1)
@@ -174,7 +174,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void UpdateSpawnT() {
-        if (newSpawn && !checkLine()) {
+        if (!checkLine() && newSpawn) {
             GameLoop.Daley = 160;
             snake.add(new Snake(4, 1));
             eatBlock.move();
@@ -272,16 +272,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void GameOver() {
         GameOver = true;
         thread.Stop();
-     /*   canvas.drawColor(Color.BLACK);
-        Paint paintL = new Paint();
-        paintL.setColor(Color.WHITE);
-        paintL.setTextSize(100);
-
-
-        canvas.drawText("Game Over!", 100, FRAME_HEIGHT / 2, paintL);
-        paintL.setTextSize(80);
-        canvas.drawText("Press any to replay.", 0, FRAME_HEIGHT / 2 + 200, paintL);*/
-        BaseActivity.setFragment(Objects.requireNonNull(fragment.getActivity()), new GameOverFragment(), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "GO-screen");
+        BaseActivity.setFragment(Objects.requireNonNull(fragment.getActivity()), new GameOverFragment(GAME_MODE), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "GO-screen");
 
     }
 

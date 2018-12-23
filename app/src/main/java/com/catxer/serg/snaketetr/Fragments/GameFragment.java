@@ -133,7 +133,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
 
     @Override
     public void onBackPressed() {
-        gamePanel.pause();
         new EndGameDialog(Objects.requireNonNull(getContext())).show();
     }
 }

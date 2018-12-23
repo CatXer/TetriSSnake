@@ -21,16 +21,14 @@ public class Snake extends ArrayList<Block> {
     private Block head;
 
     public Snake(int x, int y) {
-
         direction = 2;
-        Random r = new Random();
-        color = Color.argb(200, r.nextInt(255), r.nextInt(255), r.nextInt(255));
         head = new Block(color, x, y);
         for (int i = 0; i < length; i++) {
             x--;
             Block bs = new Block(color, x, y);
             this.add(bs);
         }
+        setRandomColor();
     }
 
     private void moveHead() {
@@ -160,5 +158,13 @@ public class Snake extends ArrayList<Block> {
         Block lstB = get(size() - 1);
         this.add(new Block(color, lstB.getX_old(), lstB.getY_old()));
 
+    }
+
+    public void setRandomColor() {
+        Random r = new Random();
+        color = Color.argb(200, r.nextInt(255), r.nextInt(255), r.nextInt(255));
+        head.setColor(color);
+        for (Block block : this)
+            block.setColor(color);
     }
 }
