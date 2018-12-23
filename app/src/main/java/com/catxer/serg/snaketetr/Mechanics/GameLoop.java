@@ -6,7 +6,7 @@ import android.view.SurfaceHolder;
 public class GameLoop extends Thread {
     static int Daley = 160;
     static final int NormalDaley = 160;
-    private static boolean Paused;
+    public static boolean Paused;
     private final SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean isRunning;

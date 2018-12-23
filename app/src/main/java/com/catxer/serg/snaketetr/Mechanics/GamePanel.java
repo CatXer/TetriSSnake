@@ -269,7 +269,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    private void GameOver() {
+    public void GameOver() {
+        GameOver = true;
         thread.Stop();
      /*   canvas.drawColor(Color.BLACK);
         Paint paintL = new Paint();
@@ -304,9 +305,5 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return null;
     }
 
-    public void closeGame() {
-        GameOver = true;
-        thread.Stop();
-    }
 }
 

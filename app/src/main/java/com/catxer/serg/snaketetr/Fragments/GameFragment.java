@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
 import com.catxer.serg.snaketetr.Activity.EndGameDialog;
-import com.catxer.serg.snaketetr.Activity.PauseDialog;
 import com.catxer.serg.snaketetr.GameObjects.Snake;
+import com.catxer.serg.snaketetr.Mechanics.GameLoop;
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 import com.catxer.serg.snaketetr.R;
 
@@ -29,6 +29,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
     private static int RateScore = 0;
     private static int EatsCount = 0;
     private static String score;
+    private ImageView pause;
 
     public GameFragment() {
     }
@@ -74,7 +75,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
         ImageView left = view.findViewById(R.id.left);
         left.setOnClickListener(this);
 
-        ImageView pause = view.findViewById(R.id.pause);
+        ImageView exit = view.findViewById(R.id.exit_m);
+        exit.setOnClickListener(this);
+
+        pause = view.findViewById(R.id.pause);
         pause.setOnClickListener(this);
 
         info = view.findViewById(R.id.score);
@@ -113,7 +117,14 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
                 break;
             case R.id.pause:
                 gamePanel.pause();
-                new PauseDialog(Objects.requireNonNull(getContext())).show();
+                if (GameLoop.Paused)
+                    pause.setImageResource(R.drawable.baseline_play_arrow_white_36dp);
+                else
+                    pause.setImageResource(R.drawable.baseline_pause_white_36dp);
+
+                break;
+            case R.id.exit_m:
+                new EndGameDialog(Objects.requireNonNull(getContext())).show();
                 break;
 
         }

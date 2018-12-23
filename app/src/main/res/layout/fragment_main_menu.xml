@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/Menu_Layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -18,8 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="20dp"
+            android:fontFamily="casual"
             android:gravity="center"
-            android:text="TertiSSnake!"
+            android:text="TertiSSnake"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -30,10 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:background="@color/colorPrimary"
+            android:fontFamily="casual"
             android:gravity="center"
-            android:text="Play Snake!"
-            android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+            android:text="Snake"
+            android:textColor="@android:color/holo_red_dark"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -43,10 +45,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="@color/colorPrimary"
+            android:fontFamily="casual"
             android:gravity="center"
-            android:text="Play Snake-Tatris!"
-            android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+            android:text="Snake-Tatris"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="Settings"
+            android:textColor="@color/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
