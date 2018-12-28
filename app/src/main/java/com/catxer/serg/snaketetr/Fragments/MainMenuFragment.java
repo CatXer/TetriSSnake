@@ -63,7 +63,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(1), R.id.MainContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "game-1");
                 break;
             case R.id.m_settings:
-                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new SettingsFragment(), R.id.MainContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "settings");
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new SettingsFragment(), R.id.MainContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, true, "settings");
                 break;
             case R.id.m_exit:
                 Objects.requireNonNull(getActivity()).finish();

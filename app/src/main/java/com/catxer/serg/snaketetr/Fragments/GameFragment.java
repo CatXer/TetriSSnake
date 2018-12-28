@@ -102,25 +102,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
             case R.id.control_up:
                 if (Snake.dead_direction != 1) {
                     Snake.direction = 1;
-                    Snake.dead_direction = 3;
                 }
                 break;
             case R.id.control_right:
                 if (Snake.dead_direction != 2) {
                     Snake.direction = 2;
-                    Snake.dead_direction = 4;
                 }
                 break;
             case R.id.control_down:
                 if (Snake.dead_direction != 3) {
                     Snake.direction = 3;
-                    Snake.dead_direction = 1;
                 }
                 break;
             case R.id.control_left:
                 if (Snake.dead_direction != 4) {
                     Snake.direction = 4;
-                    Snake.dead_direction = 2;
                 }
                 break;
             case R.id.game_pause:

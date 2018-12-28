@@ -52,6 +52,7 @@ public class Snake extends ArrayList<Block> {
                 break;
         }
         head.move(X, Y);
+        dead_direction = direction-2>0?direction-2:direction+2;
         if (!GamePanel.Field[X][Y].isFree() || GamePanel.Field[X][Y].isWall()) {
             direction = 0;
             Alive = false;
