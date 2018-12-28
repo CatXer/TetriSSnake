@@ -27,7 +27,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/replay"
+            android:id="@+id/go_replay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
@@ -35,7 +35,7 @@
             android:src="@drawable/baseline_replay_white_36dp" />
 
         <ImageView
-            android:id="@+id/exit_menu"
+            android:id="@+id/go_exit_m"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"

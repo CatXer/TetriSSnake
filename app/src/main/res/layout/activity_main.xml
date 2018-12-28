@@ -9,7 +9,7 @@
     tools:context=".Activity.BaseActivity">
 
     <FrameLayout
-        android:id="@+id/GameContainer"
+        android:id="@+id/MainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">

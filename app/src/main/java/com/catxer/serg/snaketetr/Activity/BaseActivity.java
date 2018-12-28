@@ -29,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
         /////////////////////
 
 
-        setFragment(this, new MainMenuFragment(), R.id.GameContainer, R.anim.slide_up_anim, R.anim.fade_out, false, "Menu");
+        setFragment(this, new MainMenuFragment(), R.id.MainContainer, R.anim.slide_up_anim, R.anim.fade_out, false, "Menu");
 
 
     }

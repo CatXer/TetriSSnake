@@ -63,25 +63,25 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
-        ImageView top = view.findViewById(R.id.top);
+        ImageView top = view.findViewById(R.id.control_up);
         top.setOnClickListener(this);
 
-        ImageView down = view.findViewById(R.id.down);
+        ImageView down = view.findViewById(R.id.control_down);
         down.setOnClickListener(this);
 
-        ImageView right = view.findViewById(R.id.right);
+        ImageView right = view.findViewById(R.id.control_right);
         right.setOnClickListener(this);
 
-        ImageView left = view.findViewById(R.id.left);
+        ImageView left = view.findViewById(R.id.control_left);
         left.setOnClickListener(this);
 
-        ImageView exit = view.findViewById(R.id.exit_m);
+        ImageView exit = view.findViewById(R.id.game_exit_m);
         exit.setOnClickListener(this);
 
-        pause = view.findViewById(R.id.pause);
+        pause = view.findViewById(R.id.game_pause);
         pause.setOnClickListener(this);
 
-        info = view.findViewById(R.id.score);
+        info = view.findViewById(R.id.game_info_panel);
 
         StartNewGame(GameMode);
 
@@ -92,30 +92,38 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
         RateScore = 0;
         EatsCount = 0;
         gamePanel = new GamePanel(this, GameMode);
-        BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new CanvasFragment(), R.id.CanvasContainer, R.anim.fade_in, R.anim.fade_out, false, "draw_field");
+        BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new CanvasFragment(), R.id.game_container, R.anim.fade_in, R.anim.fade_out, false, "draw_field");
         updateUI();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.top:
-                if (Snake.direction != 3)
+            case R.id.control_up:
+                if (Snake.dead_direction != 1) {
                     Snake.direction = 1;
+                    Snake.dead_direction = 3;
+                }
                 break;
-            case R.id.right:
-                if (Snake.direction != 4)
+            case R.id.control_right:
+                if (Snake.dead_direction != 2) {
                     Snake.direction = 2;
+                    Snake.dead_direction = 4;
+                }
                 break;
-            case R.id.down:
-                if (Snake.direction != 1)
+            case R.id.control_down:
+                if (Snake.dead_direction != 3) {
                     Snake.direction = 3;
+                    Snake.dead_direction = 1;
+                }
                 break;
-            case R.id.left:
-                if (Snake.direction != 2)
+            case R.id.control_left:
+                if (Snake.dead_direction != 4) {
                     Snake.direction = 4;
+                    Snake.dead_direction = 2;
+                }
                 break;
-            case R.id.pause:
+            case R.id.game_pause:
                 gamePanel.pause();
                 if (GameLoop.Paused)
                     pause.setImageResource(R.drawable.baseline_play_arrow_white_36dp);
@@ -123,7 +131,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
                     pause.setImageResource(R.drawable.baseline_pause_white_36dp);
 
                 break;
-            case R.id.exit_m:
+            case R.id.game_exit_m:
                 new EndGameDialog(Objects.requireNonNull(getContext())).show();
                 break;
 

@@ -15,6 +15,7 @@ public class Snake extends ArrayList<Block> {
     private static final int length = 3;
 
     public static int direction = 0; // 1-top 2-right 3-bottom 4-left;
+    public static int dead_direction = 0;
 
     private int color;
     private boolean Alive = true;
@@ -22,6 +23,7 @@ public class Snake extends ArrayList<Block> {
 
     public Snake(int x, int y) {
         direction = 2;
+        dead_direction = 4;
         head = new Block(color, x, y);
         for (int i = 0; i < length; i++) {
             x--;

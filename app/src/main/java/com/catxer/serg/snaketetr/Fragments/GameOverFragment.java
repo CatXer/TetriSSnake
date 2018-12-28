@@ -35,9 +35,9 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         GO_view = inflater.inflate(R.layout.fragment_game_over, container, false);
 
-        ImageView close = GO_view.findViewById(R.id.exit_menu);
+        ImageView close = GO_view.findViewById(R.id.go_exit_m);
         close.setOnClickListener(this);
-        ImageView replay = GO_view.findViewById(R.id.replay);
+        ImageView replay = GO_view.findViewById(R.id.go_replay);
         replay.setOnClickListener(this);
 
 
@@ -47,11 +47,11 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.replay:
-                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(GAME_MODE), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "game-" + GAME_MODE);
+            case R.id.go_replay:
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(GAME_MODE), R.id.MainContainer, R.anim.fade_in, R.anim.fade_out, false, "game-" + GAME_MODE);
                 break;
-            case R.id.exit_menu:
-                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new MainMenuFragment(), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "Menu");
+            case R.id.go_exit_m:
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new MainMenuFragment(), R.id.MainContainer, R.anim.fade_in, R.anim.fade_out, false, "Menu");
                 break;
         }
     }

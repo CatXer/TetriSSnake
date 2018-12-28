@@ -174,7 +174,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void UpdateSpawnT() {
-        if (!checkLine() && newSpawn) {
+        if (newSpawn && !checkLine()) {
             GameLoop.Daley = 160;
             snake.add(new Snake(4, 1));
             eatBlock.move();
@@ -272,7 +272,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void GameOver() {
         GameOver = true;
         thread.Stop();
-        BaseActivity.setFragment(Objects.requireNonNull(fragment.getActivity()), new GameOverFragment(GAME_MODE), R.id.GameContainer, R.anim.fade_in, R.anim.fade_out, false, "GO-screen");
+        BaseActivity.setFragment(Objects.requireNonNull(fragment.getActivity()), new GameOverFragment(GAME_MODE), R.id.MainContainer, R.anim.fade_in, R.anim.fade_out, false, "GO-screen");
 
     }
 

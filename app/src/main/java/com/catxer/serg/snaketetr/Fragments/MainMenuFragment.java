@@ -33,14 +33,15 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         MM_view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
 
-
-        TextView SN = MM_view.findViewById(R.id.PlaySnake);
-        TextView ST = MM_view.findViewById(R.id.PlayST);
-        TextView Settings = MM_view.findViewById(R.id.Settings);
+        TextView SN = MM_view.findViewById(R.id.m_play_snake);
+        TextView ST = MM_view.findViewById(R.id.m_play_ts);
+        TextView Settings = MM_view.findViewById(R.id.m_settings);
+        TextView Exit = MM_view.findViewById(R.id.m_exit);
 
         SN.setOnClickListener(this);
         ST.setOnClickListener(this);
         Settings.setOnClickListener(this);
+        Exit.setOnClickListener(this);
 
         Animation left = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
         Animation right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
@@ -55,15 +56,20 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.PlaySnake:
-                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(0), R.id.GameContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "game-0");
+            case R.id.m_play_snake:
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(0), R.id.MainContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "game-0");
                 break;
-            case R.id.PlayST:
-                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(1), R.id.GameContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "game-1");
+            case R.id.m_play_ts:
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new GameFragment(1), R.id.MainContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "game-1");
                 break;
-            case R.id.Settings:
-                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new SettingsFragment(), R.id.GameContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "settings");
+            case R.id.m_settings:
+                BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new SettingsFragment(), R.id.MainContainer, R.anim.slide_up_anim, R.anim.slide_buttom_anim, false, "settings");
                 break;
+            case R.id.m_exit:
+                Objects.requireNonNull(getActivity()).finish();
+                System.exit(0);
+                break;
+
         }
     }
 }
