@@ -161,18 +161,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
-        Update_map();
+
         if (GAME_MODE == 1)
             UpdateSpawnT();
+        Update_map();
     }
 
     private void UpdateSpawnT() {
+        Update_map();
         if (newSpawn && !checkLine()) {
             gameLoop.setDaley(160);
             snake.add(new Snake(4, 1));
             eatBlock.move();
             eatBlock.setColor(Color.GREEN);
-            newSpawn = false;
         }
     }
 
