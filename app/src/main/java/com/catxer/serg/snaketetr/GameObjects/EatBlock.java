@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
+import com.catxer.serg.snaketetr.Mechanics.Settings;
 
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class EatBlock extends Block {
         int y;
         setOldXY(getX(), getY());
         do {
-            x = new Random().nextInt(GamePanel.X_block_count - 1);
+            x = new Random().nextInt(Settings.X_block_count - 1);
             y = new Random().nextInt(GamePanel.Y_block_count - 1);
             setXY(x, y);
         } while (!GamePanel.Field[x][y].isFree() || GamePanel.Field[x][y].isWall());

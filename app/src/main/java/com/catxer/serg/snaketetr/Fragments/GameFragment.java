@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
 import com.catxer.serg.snaketetr.Activity.EndGameDialog;
 import com.catxer.serg.snaketetr.GameObjects.Snake;
-import com.catxer.serg.snaketetr.Mechanics.GameLoop;
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 import com.catxer.serg.snaketetr.R;
 
@@ -22,10 +21,9 @@ import java.util.Objects;
 public class GameFragment extends Fragment implements View.OnClickListener, OnBackPressedListener {
 
 
-    public static GamePanel gamePanel;
-    public int GameMode = 2;
-    @SuppressLint("StaticFieldLeak")
-    public static TextView info;
+    private GamePanel gamePanel;
+    private int GameMode = 2;
+    private TextView info;
     private static int RateScore = 0;
     private static int EatsCount = 0;
     private static String score;
@@ -92,7 +90,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
         RateScore = 0;
         EatsCount = 0;
         gamePanel = new GamePanel(this, GameMode);
-        BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new CanvasFragment(), R.id.game_container, R.anim.fade_in, R.anim.fade_out, false, "draw_field");
+        BaseActivity.setFragment(Objects.requireNonNull(getActivity()), new CanvasFragment(gamePanel), R.id.game_container, R.anim.fade_in, R.anim.fade_out, false, "draw_field");
         updateUI();
     }
 
@@ -121,14 +119,14 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
                 break;
             case R.id.game_pause:
                 gamePanel.pause();
-                if (GameLoop.Paused)
+                if (gamePanel.getLoop().isPaused())
                     pause.setImageResource(R.drawable.baseline_play_arrow_white_36dp);
                 else
                     pause.setImageResource(R.drawable.baseline_pause_white_36dp);
 
                 break;
             case R.id.game_exit_m:
-                new EndGameDialog(Objects.requireNonNull(getContext())).show();
+                new EndGameDialog(Objects.requireNonNull(getContext()), gamePanel).show();
                 break;
 
         }
@@ -137,6 +135,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
 
     @Override
     public void onBackPressed() {
-        new EndGameDialog(Objects.requireNonNull(getContext())).show();
+        new EndGameDialog(Objects.requireNonNull(getContext()), gamePanel).show();
     }
 }

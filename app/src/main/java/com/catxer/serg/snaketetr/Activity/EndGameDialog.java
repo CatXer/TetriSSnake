@@ -11,16 +11,22 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.catxer.serg.snaketetr.Fragments.GameFragment;
+import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 import com.catxer.serg.snaketetr.R;
 
 import java.util.Objects;
 
 public class EndGameDialog extends Dialog implements View.OnClickListener {
 
-    public EndGameDialog(@NonNull Context context) {
+    private boolean game_state;
+    private GamePanel game_panel;
+
+    public EndGameDialog(@NonNull Context context, GamePanel gamePanel) {
         super(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
-        GameFragment.gamePanel.pause();
+
+        this.game_panel = gamePanel;
+        game_state = game_panel.getLoop().isPaused();
+        game_panel.getLoop().setPaused(true);
         Objects.requireNonNull(getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_1;
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -43,11 +49,11 @@ public class EndGameDialog extends Dialog implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.exit_no:
                 dismiss();
-                GameFragment.gamePanel.pause();
+                game_panel.getLoop().setPaused(game_state);
                 break;
             case R.id.exit_yes:
                 dismiss();
-                GameFragment.gamePanel.GameOver();
+                game_panel.GameOver();
                 break;
         }
     }

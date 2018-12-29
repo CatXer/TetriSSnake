@@ -4,9 +4,8 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread {
-    static int Daley = 160;
-    static final int NormalDaley = 160;
-    public static boolean Paused;
+    private int Daley = 160;
+    private boolean Paused;
     private final SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean isRunning;
@@ -51,11 +50,23 @@ public class GameLoop extends Thread {
         }
     }
 
+    public void setDaley(int daley){
+        Daley = daley;
+    }
+
+    public int getDaley() {
+        return Daley;
+    }
+
     void Stop() {
         isRunning = false;
     }
 
-    public void pause() {
-        Paused = !Paused;
+    public void setPaused(boolean paused) {
+        Paused = paused;
+    }
+
+    public boolean isPaused() {
+        return Paused;
     }
 }

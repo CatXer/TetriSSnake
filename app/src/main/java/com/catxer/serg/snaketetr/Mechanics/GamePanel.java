@@ -27,29 +27,22 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
+import static com.catxer.serg.snaketetr.Mechanics.Settings.X_block_count;
+
+
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
-
-    private static final double FRAME_WIDTH_K = 0.75f;
-    private static final double FRAME_HEIGHT_K = 0.6f;
-    public static final int X_block_count = 16;
-
-    private Bitmap groundImage = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-
-    private static int FRAME_HEIGHT;
-    private static int FRAME_WIDTH;
-    private static GameLoop thread;
-
-    public int GAME_MODE;
-    public static int Y_block_count;
-    public static int CubeSize;
     public static MapPoint[][] Field;
     public static ArrayList<Snake> snake;
     public static boolean newSpawn = false;
     public static boolean GameOver;
+    public static int Y_block_count;
+    public static int CubeSize;
 
+    private Bitmap groundImage = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+    private GameLoop gameLoop;
+    private int GAME_MODE;
     private GameFragment fragment;
-
     private EatBlock eatBlock;
 
     /**
@@ -95,8 +88,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         DisplayMetrics metricsB = new DisplayMetrics();
         display.getMetrics(metricsB);
 
-        FRAME_WIDTH = (int) (metricsB.widthPixels * FRAME_WIDTH_K);
-        FRAME_HEIGHT = (int) (metricsB.heightPixels * FRAME_HEIGHT_K);
+        int FRAME_WIDTH = (int) (metricsB.widthPixels * Settings.FRAME_WIDTH_K);
+        int FRAME_HEIGHT = (int) (metricsB.heightPixels * Settings.FRAME_HEIGHT_K);
 
         CubeSize = FRAME_WIDTH / (X_block_count);
         Y_block_count = FRAME_HEIGHT / CubeSize;
@@ -109,9 +102,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        thread = new GameLoop(getHolder(), this);
-        thread.start();
-        GameLoop.Daley = 800;
+        gameLoop = new GameLoop(getHolder(), this);
+        gameLoop.start();
+        gameLoop.setDaley(800);
     }
 
     @Override
@@ -140,7 +133,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if (GAME_MODE == 1) {
                     eatBlock.setColor(Color.TRANSPARENT);
                     s.setAlive(false);
-                    GameLoop.Daley = 30;
+                    gameLoop.setDaley(30);
                 } else {
                     ////////////////////////////////////////
                     switch (eatBlock.getType()) {
@@ -175,7 +168,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private void UpdateSpawnT() {
         if (newSpawn && !checkLine()) {
-            GameLoop.Daley = 160;
+            gameLoop.setDaley(160);
             snake.add(new Snake(4, 1));
             eatBlock.move();
             eatBlock.setColor(Color.GREEN);
@@ -220,7 +213,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (coords.size() > 0) {
             for (Snake s : new ArrayList<>(snake))
                 s.remove(coords);
-            GameLoop.Daley = 400;
+            gameLoop.setDaley(400);
             fragment.addScore(coords.size());
             return true;
         } else {
@@ -236,9 +229,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (GameLoop.Daley > GameLoop.NormalDaley) {
-            GameLoop.Daley = GameLoop.Daley - 100 > GameLoop.NormalDaley ? GameLoop.Daley - 100 : GameLoop.NormalDaley;
-            drawField(canvas, Color.argb(-GameLoop.Daley / 10, 177, 177, 177));
+        if (gameLoop.getDaley() > Settings.NormalDaley) {
+            gameLoop.setDaley(gameLoop.getDaley() - 100 > Settings.NormalDaley ? gameLoop.getDaley() - 100 : Settings.NormalDaley);
+            drawField(canvas, Color.argb(-gameLoop.getDaley() / 10, 177, 177, 177));
         } else
             drawField(canvas, Color.DKGRAY);
         for (Snake s : snake)
@@ -271,7 +264,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void GameOver() {
         GameOver = true;
-        thread.Stop();
+        gameLoop.Stop();
         BaseActivity.setFragment(Objects.requireNonNull(fragment.getActivity()), new GameOverFragment(GAME_MODE), R.id.MainContainer, R.anim.fade_in, R.anim.fade_out, false, "GO-screen");
 
     }
@@ -283,7 +276,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void pause() {
-        thread.pause();
+        gameLoop.setPaused(!gameLoop.isPaused());
     }
 
     public String getGameMode() {
@@ -296,5 +289,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return null;
     }
 
+    public GameLoop getLoop() {
+        return gameLoop;
+    }
 }
 
