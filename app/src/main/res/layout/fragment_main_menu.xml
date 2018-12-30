@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/m_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_google_signin_btn_text_dark_focused"
@@ -34,7 +35,7 @@
             android:layout_marginTop="40dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Snake"
+            android:text="SnakeS"
             android:textColor="@android:color/holo_orange_dark"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -47,7 +48,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Snake-Tatris"
+            android:text="Snake + tatriS"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -59,7 +60,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Settings"
+            android:text="SettingS"
             android:textColor="@color/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold" />

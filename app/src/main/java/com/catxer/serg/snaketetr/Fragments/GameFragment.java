@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
 import com.catxer.serg.snaketetr.Activity.EndGameDialog;
 import com.catxer.serg.snaketetr.GameObjects.Snake;
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
+import com.catxer.serg.snaketetr.Mechanics.Settings;
 import com.catxer.serg.snaketetr.R;
 
 import java.util.Objects;
@@ -75,6 +77,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
 
         ImageView exit = view.findViewById(R.id.game_exit_m);
         exit.setOnClickListener(this);
+
+        LinearLayout layout = view.findViewById(R.id.game_frame);
+        layout.setBackgroundColor(Settings.lightTheme ? Settings.BGlight : Settings.BGdark);
 
         pause = view.findViewById(R.id.game_pause);
         pause.setOnClickListener(this);
