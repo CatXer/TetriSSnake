@@ -22,7 +22,6 @@ import com.catxer.serg.snaketetr.GameObjects.MapPoint;
 import com.catxer.serg.snaketetr.GameObjects.Snake;
 import com.catxer.serg.snaketetr.R;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -35,7 +34,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static MapPoint[][] Field;
     public static ArrayList<Snake> snake;
-    public static boolean newSpawn = false;
+    public static boolean isDown = false;
     public static boolean GameOver;
     public static int Y_block_count;
     public static int CubeSize;
@@ -126,7 +125,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void Update_snakes() {
-        newSpawn = true;
+        isDown = true;
         for (Snake s : snake) {
             s.update();
             if (s.isAlive() && s.getHead().getPoint().equals(eatBlock.getPoint())) {
@@ -162,17 +161,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
-        //System.out.println(newSpawn);
-
+        //System.out.println(isDown);
+        Update_map();
         if (GAME_MODE == 1)
             UpdateSpawnT();
-        Update_map();
+
+
     }
 
     private void UpdateSpawnT() {
-        Update_map();
-        if (newSpawn && !checkLine()) {
-            gameLoop.setDaley(160);
+        boolean newSpawn = false;
+        if (isDown && !checkLine()) {
+            newSpawn = true;
+        }
+        if (newSpawn){
+            setSpawnZone(1, 1);
+            gameLoop.setDaley(Settings.NormalDaley);
             snake.add(new Snake(4, 1));
             eatBlock.move();
             eatBlock.setColor(Color.GREEN);
@@ -194,9 +198,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         for (Snake s : snake)
             for (Block b : s.getBlocks())
                 Field[b.getX()][b.getY()].setFree(false);
-
-        setSpawnZone(1, 1);
-
     }
 
     private void setSpawnZone(int X, int Y) {
@@ -284,14 +285,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, paintL);
             }
-            /*if (!Field[i][j].isSpawnable()) {
+            if (!Field[i][j].isSpawnable()) {
                 Paint p = new Paint();
                 p.setColor(Color.argb(60, 255, 10, 10));
                 Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
                 r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, p);
-            }*/
+            }
         }
     }
 

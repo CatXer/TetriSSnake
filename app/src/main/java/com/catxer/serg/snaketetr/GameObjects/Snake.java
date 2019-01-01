@@ -52,7 +52,7 @@ public class Snake extends ArrayList<Block> {
                 break;
         }
         head.move(X, Y);
-        dead_direction = direction-2>0?direction-2:direction+2;
+        dead_direction = direction - 2 > 0 ? direction - 2 : direction + 2;
         if (!GamePanel.Field[X][Y].isFree() || GamePanel.Field[X][Y].isWall()) {
             direction = 0;
             Alive = false;
@@ -81,13 +81,14 @@ public class Snake extends ArrayList<Block> {
     public void update() {
         if (!GamePanel.GameOver)
             if (isAlive()) {
-                GamePanel.newSpawn = false;
+                GamePanel.isDown = false;
                 moveHead();
                 moveBody();
             } else {
                 markFront();
                 if (CanFall()) {
-                    GamePanel.newSpawn = false;
+                    System.out.println("can Fall!!!");
+                    GamePanel.isDown = false;
                     for (Block b : this)
                         b.move(b.getX(), b.getY() + 1);
                     if (head != null)
@@ -98,10 +99,10 @@ public class Snake extends ArrayList<Block> {
 
     private boolean CanFall() {
         for (Block b : this)
-            if (b.isFront() && (!GamePanel.Field[b.getX()][b.getY() + 1].isFree() || GamePanel.Field[b.getX()][b.getY() + 1].isWall()))
+            if (b.isFront() && !GamePanel.Field[b.getX()][b.getY() + 1].isEmpty())
                 return false;
         if (head != null)
-            return !head.isFront() || (!GamePanel.Field[head.getX()][head.getY() + 1].isWall() && GamePanel.Field[head.getX()][head.getY() + 1].isFree());
+            return !head.isFront() || GamePanel.Field[head.getX()][head.getY() + 1].isEmpty();
         return true;
     }
 
