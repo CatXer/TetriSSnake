@@ -1,6 +1,7 @@
 package com.catxer.serg.snaketetr.GameObjects;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -86,6 +87,8 @@ public class Block {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(this.color);
+        /*if (isFront())
+            paint.setColor(Color.BLACK);*/
         canvas.drawRect(this.rect, paint);
     }
 

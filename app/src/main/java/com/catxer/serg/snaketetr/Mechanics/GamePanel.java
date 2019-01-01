@@ -162,19 +162,30 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         //System.out.println(isDown);
-        Update_map();
+
         if (GAME_MODE == 1)
             UpdateSpawnT();
+        Update_map();
 
 
     }
 
     private void UpdateSpawnT() {
+        Update_map();
         boolean newSpawn = false;
         if (isDown && !checkLine()) {
             newSpawn = true;
         }
         if (newSpawn){
+            for (int i = 0, j = 0; i <= X_block_count; i++) {
+                if (i % X_block_count == 0 && i / X_block_count >= 1) {
+                    j++;
+                    i = 0;
+                }
+                if (j == Y_block_count)
+                    break;
+                Field[i][j].setSpawnable(false);
+            }
             setSpawnZone(1, 1);
             gameLoop.setDaley(Settings.NormalDaley);
             snake.add(new Snake(4, 1));
@@ -192,7 +203,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             if (j == Y_block_count)
                 break;
-            Field[i][j].setSpawnable(false);
             Field[i][j].setFree(true);
         }
         for (Snake s : snake)

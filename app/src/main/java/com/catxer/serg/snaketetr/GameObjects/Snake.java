@@ -87,7 +87,6 @@ public class Snake extends ArrayList<Block> {
             } else {
                 markFront();
                 if (CanFall()) {
-                    System.out.println("can Fall!!!");
                     GamePanel.isDown = false;
                     for (Block b : this)
                         b.move(b.getX(), b.getY() + 1);
@@ -103,7 +102,7 @@ public class Snake extends ArrayList<Block> {
                 return false;
         if (head != null)
             return !head.isFront() || GamePanel.Field[head.getX()][head.getY() + 1].isEmpty();
-        return true;
+        return false;
     }
 
     public ArrayList<Block> getBlocks() {
