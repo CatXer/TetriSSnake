@@ -79,7 +79,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, OnBa
         exit.setOnClickListener(this);
 
         LinearLayout layout = view.findViewById(R.id.game_frame);
-        layout.setBackgroundColor(Settings.lightTheme ? Settings.BGlight : Settings.BGdark);
+        layout.setBackgroundColor(Settings.lightTheme ? Settings.BG_light : Settings.BG_dark);
 
         pause = view.findViewById(R.id.game_pause);
         pause.setOnClickListener(this);

@@ -42,7 +42,7 @@ public class EatBlock extends Block {
             x = new Random().nextInt(Settings.X_block_count - 1);
             y = new Random().nextInt(GamePanel.Y_block_count - 1);
             setXY(x, y);
-        } while (!GamePanel.Field[x][y].isFree() || GamePanel.Field[x][y].isWall());
+        } while (!GamePanel.Field[x][y].isSpawnable() || !GamePanel.Field[x][y].isEmpty());
 
         Rect rect = this.getRect();
         rect.set(GamePanel.Field[x][y].x - rect.width() / 2, GamePanel.Field[x][y].y - rect.height() / 2,

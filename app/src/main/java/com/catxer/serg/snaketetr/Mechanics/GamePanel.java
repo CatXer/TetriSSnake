@@ -22,6 +22,7 @@ import com.catxer.serg.snaketetr.GameObjects.MapPoint;
 import com.catxer.serg.snaketetr.GameObjects.Snake;
 import com.catxer.serg.snaketetr.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -161,6 +162,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+        //System.out.println(newSpawn);
 
         if (GAME_MODE == 1)
             UpdateSpawnT();
@@ -178,6 +180,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void Update_map() {
+
         for (int i = 0, j = 0; i <= X_block_count; i++) {
             if (i % X_block_count == 0 && i / X_block_count >= 1) {
                 j++;
@@ -185,11 +188,29 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             if (j == Y_block_count)
                 break;
+            Field[i][j].setSpawnable(false);
             Field[i][j].setFree(true);
         }
         for (Snake s : snake)
             for (Block b : s.getBlocks())
                 Field[b.getX()][b.getY()].setFree(false);
+
+        setSpawnZone(1, 1);
+
+    }
+
+    private void setSpawnZone(int X, int Y) {
+        int y = Y;
+        while (Field[X][y].isEmpty()) {
+            Field[X][y].setSpawnable(true);
+            if (Field[X - 1][y].isEmpty() && !Field[X - 1][y].isSpawnable()) {
+                setSpawnZone(X - 1, y);
+            } else if (Field[X + 1][y].isEmpty() && !Field[X + 1][y].isSpawnable()) {
+                setSpawnZone(X + 1, y);
+            }
+
+            y++;
+        }
     }
 
     private boolean checkLine() {
@@ -235,6 +256,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             drawField(canvas, Color.argb(-gameLoop.getDaley() / 10, 177, 177, 177));
         } else
             drawField(canvas, Color.DKGRAY);
+        Paint p = new Paint();
+        p.setColor(Color.YELLOW);
+
         for (Snake s : snake)
             s.draw(canvas);
         eatBlock.draw(canvas);
@@ -260,6 +284,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, paintL);
             }
+            /*if (!Field[i][j].isSpawnable()) {
+                Paint p = new Paint();
+                p.setColor(Color.argb(60, 255, 10, 10));
+                Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
+                r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
+                        Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
+                canvas.drawRect(r, p);
+            }*/
         }
     }
 

@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View settingsView = inflater.inflate(R.layout.fragment_settings, container, false);
         FrameLayout layout = settingsView.findViewById(R.id.set_frame);
-        layout.setBackgroundColor(Settings.lightTheme ? Settings.BGlight : Settings.BGdark);
+        layout.setBackgroundColor(Settings.lightTheme ? Settings.BG_light : Settings.BG_dark);
 
         SeekBar difficult = settingsView.findViewById(R.id.set_diff);
         SeekBar x_blocks = settingsView.findViewById(R.id.set_Block);

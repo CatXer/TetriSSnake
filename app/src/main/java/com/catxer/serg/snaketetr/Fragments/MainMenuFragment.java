@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
@@ -46,7 +45,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         ST.setOnClickListener(this);
         sett.setOnClickListener(this);
         Exit.setOnClickListener(this);
-        frame.setBackgroundColor(Settings.lightTheme ? Settings.BGlight : Settings.BGdark);
+        frame.setBackgroundColor(Settings.lightTheme ? Settings.BG_light : Settings.BG_dark);
 
         Animation left = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
         Animation right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
