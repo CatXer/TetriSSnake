@@ -45,6 +45,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private GameFragment fragment;
     private EatBlock eatBlock;
 
+
     /**
      * **************************************
      * -> Init Block ->
@@ -176,17 +177,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (isDown && !checkLine()) {
             newSpawn = true;
         }
-        if (newSpawn){
-            for (int i = 0, j = 0; i <= X_block_count; i++) {
-                if (i % X_block_count == 0 && i / X_block_count >= 1) {
-                    j++;
-                    i = 0;
-                }
-                if (j == Y_block_count)
-                    break;
-                Field[i][j].setSpawnable(false);
-            }
-            setSpawnZone(1, 1);
+        if (newSpawn) {
+
+            //setSpawnZone(1, 1);
             gameLoop.setDaley(Settings.NormalDaley);
             snake.add(new Snake(4, 1));
             eatBlock.move();
@@ -210,19 +203,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 Field[b.getX()][b.getY()].setFree(false);
     }
 
-    private void setSpawnZone(int X, int Y) {
-        int y = Y;
-        while (Field[X][y].isEmpty()) {
-            Field[X][y].setSpawnable(true);
-            if (Field[X - 1][y].isEmpty() && !Field[X - 1][y].isSpawnable()) {
-                setSpawnZone(X - 1, y);
-            } else if (Field[X + 1][y].isEmpty() && !Field[X + 1][y].isSpawnable()) {
-                setSpawnZone(X + 1, y);
-            }
-
-            y++;
-        }
-    }
 
     private boolean checkLine() {
         @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> coords = new HashMap<>();
@@ -262,13 +242,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
         if (gameLoop.getDaley() > Settings.NormalDaley) {
             gameLoop.setDaley(gameLoop.getDaley() - 100 > Settings.NormalDaley ? gameLoop.getDaley() - 100 : Settings.NormalDaley);
             drawField(canvas, Color.argb(-gameLoop.getDaley() / 10, 177, 177, 177));
         } else
             drawField(canvas, Color.DKGRAY);
-        Paint p = new Paint();
-        p.setColor(Color.YELLOW);
+
 
         for (Snake s : snake)
             s.draw(canvas);
@@ -295,14 +275,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, paintL);
             }
-            if (!Field[i][j].isSpawnable()) {
+            if (!Field[i][j].isEmpty()) {
                 Paint p = new Paint();
-                p.setColor(Color.argb(60, 255, 10, 10));
+                p.setColor(Color.BLUE);
                 Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
                 r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, p);
             }
+            if (Field[i][j].isSpawnable()) {
+                Paint p = new Paint();
+                p.setColor(Color.rgb(80, 0, 0));
+                Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
+                r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
+                        Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
+                canvas.drawRect(r, p);
+            }
+
         }
     }
 

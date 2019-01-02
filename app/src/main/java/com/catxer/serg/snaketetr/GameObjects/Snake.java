@@ -102,7 +102,7 @@ public class Snake extends ArrayList<Block> {
                 return false;
         if (head != null)
             return !head.isFront() || GamePanel.Field[head.getX()][head.getY() + 1].isEmpty();
-        return false;
+        return true;
     }
 
     public ArrayList<Block> getBlocks() {

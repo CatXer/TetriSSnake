@@ -17,6 +17,7 @@ public class Block {
     private int Y_old;
     private int X_old;
     private boolean front = false;
+    public boolean removed =false;
 
     public Block(int color, int x, int y) {
         this.color = color;
@@ -89,6 +90,8 @@ public class Block {
         paint.setColor(this.color);
         /*if (isFront())
             paint.setColor(Color.BLACK);*/
+        if (removed)
+            paint.setColor(Color.BLACK);
         canvas.drawRect(this.rect, paint);
     }
 
