@@ -176,7 +176,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (isDown && !checkLine()) {
             newSpawn = true;
         }
-        if (newSpawn){
+        if (newSpawn) {
             for (int i = 0, j = 0; i <= X_block_count; i++) {
                 if (i % X_block_count == 0 && i / X_block_count >= 1) {
                     j++;
@@ -212,16 +212,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private void setSpawnZone(int X, int Y) {
         int y = Y;
-        while (Field[X][y].isEmpty()) {
+        while (Field[X][y].isEmpty() && !Field[X][y].isSpawnable()) {
+
             Field[X][y].setSpawnable(true);
+
+            if (Field[X + 1][y].isEmpty() && !Field[X + 1][y].isSpawnable()) {
+                setSpawnZone(X + 1, y);
+            }
             if (Field[X - 1][y].isEmpty() && !Field[X - 1][y].isSpawnable()) {
                 setSpawnZone(X - 1, y);
-            } else if (Field[X + 1][y].isEmpty() && !Field[X + 1][y].isSpawnable()) {
-                setSpawnZone(X + 1, y);
+            }
+            if (Field[X][y - 1].isEmpty() && !Field[X][y - 1].isSpawnable()) {
+                setSpawnZone(X, y - 1);
             }
 
             y++;
+
         }
+
     }
 
     private boolean checkLine() {
