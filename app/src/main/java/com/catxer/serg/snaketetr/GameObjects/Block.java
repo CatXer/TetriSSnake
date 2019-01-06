@@ -87,8 +87,6 @@ public class Block {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(this.color);
-        /*if (isFront())
-            paint.setColor(Color.BLACK);*/
         canvas.drawRect(this.rect, paint);
     }
 

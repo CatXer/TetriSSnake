@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -24,6 +25,7 @@ import com.catxer.serg.snaketetr.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
 
@@ -33,7 +35,7 @@ import static com.catxer.serg.snaketetr.Mechanics.Settings.X_block_count;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static MapPoint[][] Field;
-    public static ArrayList<Snake> snake;
+    public static HashMap<Integer, Snake> snakes;
     public static boolean isDown = false;
     public static boolean GameOver;
     public static int Y_block_count;
@@ -49,6 +51,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
      * **************************************
      * -> Init Block ->
      */
+    @SuppressLint("UseSparseArrays")
     public GamePanel(GameFragment fragment, int GAME_MODE) {
         super(fragment.getActivity());
         this.fragment = fragment;
@@ -57,8 +60,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         InitDisplay(Objects.requireNonNull(fragment.getActivity()));
         InitField();
         getHolder().addCallback(this);
-        snake = new ArrayList<>();
-        snake.add(new Snake(7, 3));
+        snakes = new HashMap<>();
+        Snake s = new Snake(7, 3, GamePanel.GenerateID());
+        snakes.put(s.getID(), s);
         eatBlock = new EatBlock(2);
         setFocusable(true);
     }
@@ -126,7 +130,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private void Update_snakes() {
         isDown = true;
-        for (Snake s : snake) {
+        for (Snake s : snakes.values()) {
+            Update_map();
             s.update();
             if (s.isAlive() && s.getHead().getPoint().equals(eatBlock.getPoint())) {
                 fragment.addEat();
@@ -160,42 +165,40 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     ////////////////////////////////////////////////
                 }
             }
-        }
-        //System.out.println(isDown);
 
+        }
         if (GAME_MODE == 1)
             UpdateSpawnT();
-        Update_map();
 
 
     }
 
     private void UpdateSpawnT() {
-        Update_map();
-        boolean newSpawn = false;
         if (isDown && !checkLine()) {
-            newSpawn = true;
-        }
-        if (newSpawn) {
-            for (int i = 0, j = 0; i <= X_block_count; i++) {
-                if (i % X_block_count == 0 && i / X_block_count >= 1) {
+            gameLoop.setDaley(Settings.NormalDaley);
+            Snake s = new Snake(4, 1, GamePanel.GenerateID());
+            snakes.put(s.getID(), s);
+            for (int i = 1, j = 1; i <= X_block_count; i++) {
+                if (i % (X_block_count - 1) == 0 && i / (X_block_count - 1) >= 1) {
                     j++;
-                    i = 0;
+                    i = 1;
                 }
-                if (j == Y_block_count)
+                if (j == Y_block_count - 1)
                     break;
                 Field[i][j].setSpawnable(false);
+                Field[i][j].setFree(true);
             }
-            setSpawnZone(1, 1);
-            gameLoop.setDaley(Settings.NormalDaley);
-            snake.add(new Snake(4, 1));
+            for (Snake sss : snakes.values())
+                for (Block b : sss.getBlocks())
+                    Field[b.getX()][b.getY()].setFree(false);
+            setSpawnZone(5, 1);
+
             eatBlock.move();
             eatBlock.setColor(Color.GREEN);
         }
     }
 
     private void Update_map() {
-
         for (int i = 0, j = 0; i <= X_block_count; i++) {
             if (i % X_block_count == 0 && i / X_block_count >= 1) {
                 j++;
@@ -205,7 +208,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 break;
             Field[i][j].setFree(true);
         }
-        for (Snake s : snake)
+        for (Snake s : snakes.values())
             for (Block b : s.getBlocks())
                 Field[b.getX()][b.getY()].setFree(false);
     }
@@ -234,9 +237,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private boolean checkLine() {
         @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> coords = new HashMap<>();
-        int y = 0;
+        int y = Y_block_count - 1;
         ArrayList<Integer> xcoords = new ArrayList<>();
-        for (int x = 0; x < X_block_count; x++) {
+        for (int x = 1; x < X_block_count; x++) {
             if (!Field[x][y].isFree()) {
                 xcoords.add(x);
             } else {
@@ -245,15 +248,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             if (xcoords.size() == 6) {
                 coords.put(y, new ArrayList<>(xcoords));
             }
-            if (x == X_block_count - 1 && y < Y_block_count - 1) {
-                x = -1;
+            if (x == X_block_count - 1 && y > 1) {
+                x = 0;
                 xcoords = new ArrayList<>();
-                y++;
+                y--;
             }
         }
         if (coords.size() > 0) {
-            for (Snake s : new ArrayList<>(snake))
-                s.remove(coords);
+            for (Iterator<Snake> iter = snakes.values().iterator(); iter.hasNext(); ) {
+                if (iter.next().remove(coords))
+                    iter.remove();
+            }
             gameLoop.setDaley(400);
             fragment.addScore(coords.size());
             return true;
@@ -270,17 +275,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+
         if (gameLoop.getDaley() > Settings.NormalDaley) {
             gameLoop.setDaley(gameLoop.getDaley() - 100 > Settings.NormalDaley ? gameLoop.getDaley() - 100 : Settings.NormalDaley);
             drawField(canvas, Color.argb(-gameLoop.getDaley() / 10, 177, 177, 177));
         } else
             drawField(canvas, Color.DKGRAY);
-        Paint p = new Paint();
-        p.setColor(Color.YELLOW);
-
-        for (Snake s : snake)
+        for (Snake s : snakes.values())
             s.draw(canvas);
         eatBlock.draw(canvas);
+
 
     }
 
@@ -297,20 +302,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawBitmap(groundImage, Field[i][j].x - groundImage.getWidth() / 2, Field[i][j].y - groundImage.getHeight() / 2, paintL);
 
             if (Field[i][j].isWall()) {
-                paintL.setColor(background);
-                Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
-                r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
-                        Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
-                canvas.drawRect(r, paintL);
-            }
-            if (!Field[i][j].isSpawnable()) {
                 Paint p = new Paint();
-                p.setColor(Color.argb(60, 255, 10, 10));
+                p.setColor(background);
                 Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
                 r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, p);
             }
+
         }
     }
 
@@ -343,6 +342,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public GameLoop getLoop() {
         return gameLoop;
+    }
+
+    public static int GenerateID() {
+        Random r = new Random();
+        int id = 0;
+        do {
+            id = r.nextInt(1000);
+        } while (snakes.containsKey(id));
+        return id;
     }
 }
 

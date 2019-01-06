@@ -12,5 +12,5 @@ public class Settings {
     public static int NormalDaley = 160;
     public static int X_block_count = 16;
     public static boolean lightTheme = false;
-
+    public static boolean Debug = false;
 }

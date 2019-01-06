@@ -3,12 +3,17 @@ package com.catxer.serg.snaketetr.GameObjects;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
+import com.catxer.serg.snaketetr.Mechanics.Settings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+
+import static com.catxer.serg.snaketetr.Mechanics.GamePanel.CubeSize;
 
 public class Snake extends ArrayList<Block> {
 
@@ -20,8 +25,13 @@ public class Snake extends ArrayList<Block> {
     private int color;
     private boolean Alive = true;
     private Block head;
+    private int ID;
 
-    public Snake(int x, int y) {
+    public int getID() {
+        return ID;
+    }
+
+    public Snake(int x, int y, int id) {
         direction = 2;
         dead_direction = 4;
         head = new Block(color, x, y);
@@ -31,7 +41,9 @@ public class Snake extends ArrayList<Block> {
             this.add(bs);
         }
         setRandomColor();
+        ID = id;
     }
+
 
     private void moveHead() {
         int X = head.getX();
@@ -73,9 +85,42 @@ public class Snake extends ArrayList<Block> {
     }
 
     public void draw(Canvas canvas) {
-        if (head != null)
+        if (head != null) {
             head.draw(canvas);
-        for (Block bs : this) bs.draw(canvas);
+            if (Settings.Debug) {
+                Paint p = new Paint();
+                if (head.isFront()) {
+                    p.setColor(Color.rgb(0, 0, 90));
+                    RectF r = new RectF(CubeSize / 2, CubeSize / 2, CubeSize, CubeSize);
+                    r.set(GamePanel.Field[head.getX()][head.getX()].x - r.width() / 2, GamePanel.Field[head.getX()][head.getY()].y - r.height() / 2,
+                            GamePanel.Field[head.getX()][head.getY()].x + r.width() / 2, GamePanel.Field[head.getX()][head.getY()].y + r.height() / 2);
+                    canvas.drawOval(r, p);
+                }
+                p.setColor(Color.GREEN);
+                p.setTextSize(40);
+                p.setFakeBoldText(true);
+                canvas.drawText("" + ID, GamePanel.Field[head.getX()][head.getX()].x, GamePanel.Field[head.getX()][head.getY()].y, p);
+            }
+        }
+
+        for (Block bs : this) {
+            bs.draw(canvas);
+
+            if (Settings.Debug) {
+                Paint p = new Paint();
+                if (bs.isFront()) {
+                    p.setColor(Color.rgb(0, 0, 0));
+                    RectF r = new RectF(CubeSize / 2, CubeSize / 2, CubeSize, CubeSize);
+                    r.set(GamePanel.Field[bs.getX()][bs.getX()].x - r.width() / 2, GamePanel.Field[bs.getX()][bs.getY()].y - r.height() / 2,
+                            GamePanel.Field[bs.getX()][bs.getY()].x + r.width() / 2, GamePanel.Field[bs.getX()][bs.getY()].y + r.height() / 2);
+                    canvas.drawOval(r, p);
+                }
+                p.setColor(Color.GREEN);
+                p.setTextSize(40);
+                p.setFakeBoldText(true);
+                canvas.drawText("" + ID, GamePanel.Field[bs.getX()][bs.getX()].x, GamePanel.Field[bs.getX()][bs.getY()].y, p);
+            }
+        }
     }
 
     public void update() {
@@ -102,7 +147,7 @@ public class Snake extends ArrayList<Block> {
                 return false;
         if (head != null)
             return !head.isFront() || GamePanel.Field[head.getX()][head.getY() + 1].isEmpty();
-        return false;
+        return true;
     }
 
     public ArrayList<Block> getBlocks() {
@@ -133,7 +178,7 @@ public class Snake extends ArrayList<Block> {
             b.setFront(true);
     }
 
-    public void remove(HashMap<Integer, ArrayList<Integer>> coords) {
+    public boolean remove(HashMap<Integer, ArrayList<Integer>> coords) {
         ArrayList<Block> removeList = new ArrayList<>();
         for (int blockId = 0; blockId < size(); blockId++) {
             Block b = get(blockId);
@@ -142,11 +187,9 @@ public class Snake extends ArrayList<Block> {
         }
         if (head != null && coords.containsKey(head.getY()) && coords.get(head.getY()).contains(head.getX()))
             head = null;
-
         for (Block b : removeList)
             remove(b);
-        if (size() == 0 && getHead() == null)
-            GamePanel.snake.remove(this);
+        return size() == 0 && getHead() == null;
     }
 
     public void setAlive(boolean alive) {

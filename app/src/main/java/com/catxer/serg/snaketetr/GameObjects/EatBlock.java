@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 import com.catxer.serg.snaketetr.Mechanics.Settings;
@@ -39,11 +40,11 @@ public class EatBlock extends Block {
         int y;
         setOldXY(getX(), getY());
         do {
-            x = new Random().nextInt(Settings.X_block_count - 1);
-            y = new Random().nextInt(GamePanel.Y_block_count - 1);
+            x = new Random().nextInt(Settings.X_block_count - 1) + 1;
+            y = new Random().nextInt(GamePanel.Y_block_count - 1) + 1;
             setXY(x, y);
-        } while (!GamePanel.Field[x][y].isSpawnable() || !GamePanel.Field[x][y].isEmpty());
-
+            System.out.println("FIND");
+        } while (!GamePanel.Field[x][y].isSpawnable());
         Rect rect = this.getRect();
         rect.set(GamePanel.Field[x][y].x - rect.width() / 2, GamePanel.Field[x][y].y - rect.height() / 2,
                 GamePanel.Field[x][y].x + rect.width() / 2, GamePanel.Field[x][y].y + rect.height() / 2);
@@ -58,6 +59,8 @@ public class EatBlock extends Block {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(getColor());
-        canvas.drawRect(getRect(), paint);
+        Rect r = getRect();
+        RectF rf = new RectF(r.left, r.top, r.right, r.bottom);
+        canvas.drawOval(rf, paint);
     }
 }

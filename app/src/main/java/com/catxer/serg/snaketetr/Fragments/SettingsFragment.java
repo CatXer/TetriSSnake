@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -40,6 +42,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
         difficult.setProgress((470-Settings.NormalDaley)/40);
         x_blocks.setProgress(Settings.X_block_count-10);
+
+
+        CheckBox CB = settingsView.findViewById(R.id.CB_debug);
+        CB.setChecked(Settings.Debug);
+        CB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Settings.Debug = b;
+            }
+        });
 
         return settingsView;
     }
