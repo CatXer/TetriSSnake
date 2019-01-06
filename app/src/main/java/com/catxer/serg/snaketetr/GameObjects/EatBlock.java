@@ -11,6 +11,7 @@ import com.catxer.serg.snaketetr.Mechanics.Settings;
 
 import java.util.Random;
 
+
 public class EatBlock extends Block {
 
     private static final int stand_color = Color.RED;
