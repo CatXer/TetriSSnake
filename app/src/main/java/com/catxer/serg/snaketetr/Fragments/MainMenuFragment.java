@@ -23,15 +23,13 @@ import java.util.Objects;
  */
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
-    private View MM_view;
-
     public MainMenuFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        MM_view = inflater.inflate(R.layout.fragment_main_menu, container, false);
+        View MM_view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
 
         TextView SN = MM_view.findViewById(R.id.m_play_snake);

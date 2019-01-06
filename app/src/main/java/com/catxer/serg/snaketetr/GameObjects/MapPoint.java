@@ -4,22 +4,22 @@ import android.graphics.Point;
 
 public class MapPoint extends Point {
 
-    private boolean free = true;
+    private boolean free;
     private boolean wall;
-    private boolean spawnable;
+    private boolean no_generability;
 
     public MapPoint(int x, int y, boolean isWall) {
         super(x, y);
         wall = isWall;
-        spawnable = !isWall;
+        no_generability = isWall;
     }
 
     public void setFree(boolean free) {
         this.free = free;
     }
 
-    public void setSpawnable(boolean spannable) {
-        spawnable = spannable;
+    public void setNoGenerability(boolean generability) {
+        this.no_generability = generability;
     }
 
     public boolean isFree() {
@@ -27,14 +27,14 @@ public class MapPoint extends Point {
     }
 
     public boolean isEmpty() {
-        return free && !wall;
+        return isFree() && !wall;
     }
 
     public boolean isWall() {
         return wall;
     }
 
-    public boolean isSpawnable() {
-        return spawnable;
+    public boolean isNoGenerability() {
+        return no_generability;
     }
 }

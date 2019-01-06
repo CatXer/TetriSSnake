@@ -10,11 +10,23 @@ public class GameLoop extends Thread {
     private GamePanel gamePanel;
     private boolean isRunning;
 
-    public GameLoop(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
+    GameLoop(SurfaceHolder surfaceHolder, GamePanel gamePanel) {
         super();
         Paused = false;
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
+    }
+
+    void setDaley(int daley) {
+        Daley = daley;
+    }
+
+    int getDaley() {
+        return Daley;
+    }
+
+    void Stop() {
+        isRunning = false;
     }
 
     @Override
@@ -48,18 +60,6 @@ public class GameLoop extends Thread {
                 ex.printStackTrace();
             }
         }
-    }
-
-    public void setDaley(int daley){
-        Daley = daley;
-    }
-
-    public int getDaley() {
-        return Daley;
-    }
-
-    void Stop() {
-        isRunning = false;
     }
 
     public void setPaused(boolean paused) {

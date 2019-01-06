@@ -3,4 +3,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Quest_exit">Exit to menu?</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
+    <string name="todo">TODO</string>
+    <string name="gm_st">GM: ST</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="menu_exit">Exit</string>
+    <string name="menu_settings">SettingS</string>
+    <string name="menu_snake_tatris">Snake + tatriS</string>
+    <string name="menu_snakes">SnakeS</string>
+    <string name="menu_tertissnake">TertiSSnake</string>
+    <string name="debug_mode">Debug Mode</string>
+    <string name="x_block_count">X block count</string>
+    <string name="difficult">Difficult</string>
 </resources>

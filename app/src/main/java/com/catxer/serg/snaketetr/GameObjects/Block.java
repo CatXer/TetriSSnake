@@ -1,7 +1,6 @@
 package com.catxer.serg.snaketetr.GameObjects;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -18,7 +17,7 @@ public class Block {
     private int X_old;
     private boolean front = false;
 
-    public Block(int color, int x, int y) {
+    Block(int color, int x, int y) {
         this.color = color;
         this.X = x;
         this.Y = y;
@@ -27,16 +26,43 @@ public class Block {
                 GamePanel.Field[X][Y].x + rect.width() / 2, GamePanel.Field[X][Y].y + rect.height() / 2);
     }
 
-    public void move(int x, int y) {
+    void move(int x, int y) {
         setOldXY(X, Y);
         setXY(x, y);
         rect.set(GamePanel.Field[X][Y].x - rect.width() / 2, GamePanel.Field[X][Y].y - rect.height() / 2,
                 GamePanel.Field[X][Y].x + rect.width() / 2, GamePanel.Field[X][Y].y + rect.height() / 2);
     }
 
-    public Rect getRect() {
+    boolean isFront() {
+        return front;
+    }
+
+    void setFront() {
+        this.front = true;
+    }
+
+    void setOldXY(int x, int y) {
+        X_old = x;
+        Y_old = y;
+    }
+
+    void setXY(int x, int y) {
+        X = x;
+        Y = y;
+    }
+
+    int getY_old() {
+        return Y_old;
+    }
+
+    int getX_old() {
+        return X_old;
+    }
+
+    Rect getRect() {
         return rect;
     }
+
 
     public void setColor(int color) {
         this.color = color;
@@ -44,24 +70,6 @@ public class Block {
 
     public int getColor() {
         return color;
-    }
-
-    public void setOldXY(int x, int y) {
-        X_old = x;
-        Y_old = y;
-    }
-
-    public void setXY(int x, int y) {
-        X = x;
-        Y = y;
-    }
-
-    public int getY_old() {
-        return Y_old;
-    }
-
-    public int getX_old() {
-        return X_old;
     }
 
     public int getX() {
@@ -74,14 +82,6 @@ public class Block {
 
     public Point getPoint() {
         return new Point(X, Y);
-    }
-
-    public boolean isFront() {
-        return front;
-    }
-
-    public void setFront(boolean front) {
-        this.front = front;
     }
 
     public void draw(Canvas canvas) {

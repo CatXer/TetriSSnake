@@ -16,6 +16,7 @@ public class CanvasFragment extends Fragment {
 
     public CanvasFragment() {
     }
+
     @SuppressLint("ValidFragment")
     public CanvasFragment(GamePanel panel) {
         this.panel = panel;

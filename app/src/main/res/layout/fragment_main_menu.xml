@@ -22,7 +22,7 @@
             android:layout_margin="20dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="TertiSSnake"
+            android:text="@string/menu_tertissnake"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="50sp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_marginTop="40dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="SnakeS"
+            android:text="@string/menu_snakes"
             android:textColor="@android:color/holo_orange_dark"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -48,7 +48,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Snake + tatriS"
+            android:text="@string/menu_snake_tatris"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -60,7 +60,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="SettingS"
+            android:text="@string/menu_settings"
             android:textColor="@color/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -72,7 +72,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="casual"
             android:gravity="center"
-            android:text="Exit"
+            android:text="@string/menu_exit"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="40sp"
             android:textStyle="bold" />

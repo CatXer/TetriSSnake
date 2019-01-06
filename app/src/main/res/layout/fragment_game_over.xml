@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +20,7 @@
             android:layout_margin="20dp"
             android:layout_weight="4"
             android:gravity="center"
-            android:text="GAME OVER"
+            android:text="@string/game_over"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -32,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:layout_weight="1"
-            android:src="@drawable/baseline_replay_white_36dp" />
+            android:src="@drawable/baseline_replay_white_36dp"
+            android:contentDescription="@string/todo" />
 
         <ImageView
             android:id="@+id/go_exit_m"
@@ -40,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:layout_weight="1"
-            android:src="@drawable/baseline_close_white_24dp" />
+            android:src="@drawable/baseline_close_white_24dp"
+            android:contentDescription="@string/todo" />
 
     </LinearLayout>
 

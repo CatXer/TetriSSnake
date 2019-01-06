@@ -11,15 +11,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
 
             <FrameLayout
                 android:id="@+id/game_container"
@@ -41,7 +44,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
-                    android:src="@drawable/up" />
+                    android:src="@drawable/up"
+                    android:contentDescription="@string/todo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -55,14 +59,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/left" />
+                        android:src="@drawable/left"
+                        android:contentDescription="@string/todo" />
 
                     <ImageView
                         android:id="@+id/control_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/right" />
+                        android:src="@drawable/right"
+                        android:contentDescription="@string/todo" />
                 </LinearLayout>
 
                 <ImageView
@@ -71,7 +77,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
-                    android:src="@drawable/down" />
+                    android:src="@drawable/down"
+                    android:contentDescription="@string/todo" />
 
             </LinearLayout>
 
@@ -88,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="GM: ST"
+                android:text="@string/gm_st"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -101,7 +108,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="0"
                 android:background="@color/common_google_signin_btn_text_dark_focused"
-                app:srcCompat="@drawable/baseline_pause_white_36dp" />
+                app:srcCompat="@drawable/baseline_pause_white_36dp"
+                android:contentDescription="@string/todo" />
 
             <ImageButton
                 android:id="@+id/game_exit_m"
@@ -112,7 +120,8 @@
                 android:layout_marginBottom="20dp"
                 android:layout_weight="0"
                 android:background="@color/common_google_signin_btn_text_dark_focused"
-                app:srcCompat="@drawable/baseline_exit_to_app_white_36dp" />
+                app:srcCompat="@drawable/baseline_exit_to_app_white_36dp"
+                android:contentDescription="@string/todo" />
 
         </LinearLayout>
 

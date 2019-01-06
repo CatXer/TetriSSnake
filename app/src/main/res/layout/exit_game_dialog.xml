@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Exit to menu?"
+            android:text="@string/Quest_exit"
             android:textColor="@color/cardview_light_background"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Yes"
+                android:text="@string/answer_yes"
                 android:textColor="@color/common_google_signin_btn_text_dark_pressed"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="No"
+                android:text="@string/answer_no"
                 android:textColor="@color/common_google_signin_btn_text_dark_pressed"
                 android:textSize="24sp"
                 android:textStyle="bold" />

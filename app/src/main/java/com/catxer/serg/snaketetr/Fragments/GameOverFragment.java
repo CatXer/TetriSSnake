@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.catxer.serg.snaketetr.Activity.BaseActivity;
-import com.catxer.serg.snaketetr.Mechanics.GamePanel;
 import com.catxer.serg.snaketetr.R;
 
 import java.util.Objects;
@@ -20,7 +19,6 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class GameOverFragment extends Fragment implements View.OnClickListener {
-    private View GO_view;
     private int GAME_MODE;
 
     public GameOverFragment() {
@@ -33,7 +31,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        GO_view = inflater.inflate(R.layout.fragment_game_over, container, false);
+        View GO_view = inflater.inflate(R.layout.fragment_game_over, container, false);
 
         ImageView close = GO_view.findViewById(R.id.go_exit_m);
         close.setOnClickListener(this);

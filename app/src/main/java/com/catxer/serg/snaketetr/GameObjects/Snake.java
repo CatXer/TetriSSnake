@@ -44,7 +44,6 @@ public class Snake extends ArrayList<Block> {
         ID = id;
     }
 
-
     private void moveHead() {
         int X = head.getX();
         int Y = head.getY();
@@ -170,22 +169,22 @@ public class Snake extends ArrayList<Block> {
 
 
         if (head != null && (!temp.containsKey(head.getX()) || temp.get(head.getX()).getY() < head.getY())) {
-            head.setFront(true);
+            head.setFront();
             temp.remove(head.getX());
         }
 
         for (Block b : temp.values())
-            b.setFront(true);
+            b.setFront();
     }
 
-    public boolean remove(HashMap<Integer, ArrayList<Integer>> coords) {
+    public boolean remove(HashMap<Integer, ArrayList<Integer>> cords) {
         ArrayList<Block> removeList = new ArrayList<>();
         for (int blockId = 0; blockId < size(); blockId++) {
             Block b = get(blockId);
-            if (coords.containsKey(b.getY()) && coords.get(b.getY()).contains(b.getX()))
+            if (cords.containsKey(b.getY()) && cords.get(b.getY()).contains(b.getX()))
                 removeList.add(b);
         }
-        if (head != null && coords.containsKey(head.getY()) && coords.get(head.getY()).contains(head.getX()))
+        if (head != null && cords.containsKey(head.getY()) && cords.get(head.getY()).contains(head.getX()))
             head = null;
         for (Block b : removeList)
             remove(b);

@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -24,7 +23,6 @@ import com.catxer.serg.snaketetr.GameObjects.Snake;
 import com.catxer.serg.snaketetr.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -33,6 +31,7 @@ import java.util.Random;
 import static com.catxer.serg.snaketetr.Mechanics.Settings.X_block_count;
 
 
+@SuppressLint("ViewConstructor")
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static MapPoint[][] Field;
@@ -186,7 +185,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 if (j == Y_block_count - 1)
                     break;
-                Field[i][j].setSpawnable(false);
+                Field[i][j].setNoGenerability(true);
                 Field[i][j].setFree(true);
             }
             for (Snake sss : snakes.values())
@@ -216,17 +215,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private void setSpawnZone(int X, int Y) {
         int y = Y;
-        while (Field[X][y].isEmpty() && !Field[X][y].isSpawnable()) {
+        while (Field[X][y].isEmpty() && Field[X][y].isNoGenerability()) {
 
-            Field[X][y].setSpawnable(true);
+            Field[X][y].setNoGenerability(false);
 
-            if (Field[X + 1][y].isEmpty() && !Field[X + 1][y].isSpawnable()) {
+            if (Field[X + 1][y].isEmpty() && Field[X + 1][y].isNoGenerability()) {
                 setSpawnZone(X + 1, y);
             }
-            if (Field[X - 1][y].isEmpty() && !Field[X - 1][y].isSpawnable()) {
+            if (Field[X - 1][y].isEmpty() && Field[X - 1][y].isNoGenerability()) {
                 setSpawnZone(X - 1, y);
             }
-            if (Field[X][y - 1].isEmpty() && !Field[X][y - 1].isSpawnable()) {
+            if (Field[X][y - 1].isEmpty() && Field[X][y - 1].isNoGenerability()) {
                 setSpawnZone(X, y - 1);
             }
 
@@ -238,33 +237,30 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private boolean checkLine() {
         Update_map();
-        @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> coords = new HashMap<>();
+        @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> cords = new HashMap<>();
         int y = Y_block_count - 1;
-        ArrayList<Integer> xcoords = new ArrayList<>();
+        ArrayList<Integer> x_cords = new ArrayList<>();
         for (int x = 1; x < X_block_count; x++) {
             if (!Field[x][y].isFree()) {
-                xcoords.add(x);
+                x_cords.add(x);
             } else {
-                xcoords = new ArrayList<>();
+                x_cords = new ArrayList<>();
             }
-            if (xcoords.size() == 6) {
-                coords.put(y, new ArrayList<>(xcoords));
+            if (x_cords.size() == 6) {
+                cords.put(y, new ArrayList<>(x_cords));
             }
             if (x == X_block_count - 1 && y > 1) {
                 x = 0;
-                xcoords = new ArrayList<>();
+                x_cords = new ArrayList<>();
                 y--;
             }
         }
-        if (coords.size() > 0) {
-            for (Iterator<Snake> iter = snakes.values().iterator(); iter.hasNext(); ) {
-                if (iter.next().remove(coords))
-                    iter.remove();
-            }
-            System.out.println(Arrays.toString(coords.keySet().toArray()));
-            System.out.println(snakes.values().size());
+        if (cords.size() > 0) {
+            for (Iterator<Snake> iterator = snakes.values().iterator(); iterator.hasNext(); )
+                if (iterator.next().remove(cords))
+                    iterator.remove();
             gameLoop.setDaley(400);
-            fragment.addScore(coords.size());
+            fragment.addScore(cords.size());
             return true;
         } else {
             return false;
@@ -279,8 +275,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-
-
         if (gameLoop.getDaley() > Settings.NormalDaley) {
             gameLoop.setDaley(gameLoop.getDaley() - 100 > Settings.NormalDaley ? gameLoop.getDaley() - 100 : Settings.NormalDaley);
             drawField(canvas, Color.argb(-gameLoop.getDaley() / 10, 177, 177, 177));
@@ -312,7 +306,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, p);
-            }if (Settings.Debug&&!Field[i][j].isFree()) {
+            }
+            if (Settings.Debug && !Field[i][j].isFree()) {
                 Paint p = new Paint();
                 p.setColor(Color.RED);
                 Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
@@ -358,7 +353,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public static int GenerateID() {
         Random r = new Random();
-        int id = 0;
+        int id;
         do {
             id = r.nextInt(1000);
         } while (snakes.containsKey(id));

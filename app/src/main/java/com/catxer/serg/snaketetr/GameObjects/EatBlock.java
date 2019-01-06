@@ -43,8 +43,7 @@ public class EatBlock extends Block {
             x = new Random().nextInt(Settings.X_block_count - 1) + 1;
             y = new Random().nextInt(GamePanel.Y_block_count - 1) + 1;
             setXY(x, y);
-            System.out.println("FIND");
-        } while (!GamePanel.Field[x][y].isSpawnable());
+        } while (GamePanel.Field[x][y].isNoGenerability());
         Rect rect = this.getRect();
         rect.set(GamePanel.Field[x][y].x - rect.width() / 2, GamePanel.Field[x][y].y - rect.height() / 2,
                 GamePanel.Field[x][y].x + rect.width() / 2, GamePanel.Field[x][y].y + rect.height() / 2);
