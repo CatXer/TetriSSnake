@@ -40,8 +40,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         x_blocks.setOnSeekBarChangeListener(this);
         back.setOnClickListener(this);
 
-        difficult.setProgress((470-Settings.NormalDaley)/40);
-        x_blocks.setProgress(Settings.X_block_count-10);
+        difficult.setProgress((470 - Settings.NormalDaley) / 40);
+        x_blocks.setProgress(Settings.X_block_count - 10);
 
 
         CheckBox CB = settingsView.findViewById(R.id.CB_debug);
@@ -79,10 +79,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     public void onStopTrackingTouch(SeekBar seekBar) {
         switch (seekBar.getId()) {
             case R.id.set_diff:
-                Settings.NormalDaley = 470 - seekBar.getProgress()*40;
+                Settings.NormalDaley = 470 - seekBar.getProgress() * 40;
                 break;
             case R.id.set_Block:
-                Settings.X_block_count = seekBar.getProgress()+10;
+                Settings.X_block_count = seekBar.getProgress() + 10;
                 break;
         }
     }

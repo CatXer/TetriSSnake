@@ -24,6 +24,7 @@ import com.catxer.serg.snaketetr.GameObjects.Snake;
 import com.catxer.serg.snaketetr.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -236,6 +237,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private boolean checkLine() {
+        Update_map();
         @SuppressLint("UseSparseArrays") HashMap<Integer, ArrayList<Integer>> coords = new HashMap<>();
         int y = Y_block_count - 1;
         ArrayList<Integer> xcoords = new ArrayList<>();
@@ -259,6 +261,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if (iter.next().remove(coords))
                     iter.remove();
             }
+            System.out.println(Arrays.toString(coords.keySet().toArray()));
+            System.out.println(snakes.values().size());
             gameLoop.setDaley(400);
             fragment.addScore(coords.size());
             return true;
@@ -308,7 +312,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
                         Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
                 canvas.drawRect(r, p);
+            }if (Settings.Debug&&!Field[i][j].isFree()) {
+                Paint p = new Paint();
+                p.setColor(Color.RED);
+                Rect r = new Rect(CubeSize, CubeSize, CubeSize * 2, CubeSize * 2);
+                r.set(Field[i][j].x - r.width() / 2, Field[i][j].y - r.height() / 2,
+                        Field[i][j].x + r.width() / 2, Field[i][j].y + r.height() / 2);
+                canvas.drawRect(r, p);
             }
+
 
         }
     }
